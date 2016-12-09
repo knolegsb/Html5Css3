@@ -4,32 +4,130 @@
     <title>Tab Menu</title>
 	<meta charset="utf-8" />
     <style>
-        .box1{width:200px; height:10px; border:30px solid red;}
-        .box2{width:200px; height:10px; border-right:30px solid red; border-bottom: 30px solid blue;}
-        .box3{width:200px; height:10px; border-right:30px solid transparent; border-bottom:30px solid blue;}
-
-        .box4{
-            position: relative;
+        body{
             background: #fff;
-            width: 100px;
-            height: 100px;
-            border: 1px solid #c2c2c2;
         }
-
-        .effect{
+        section{
             position:relative;
-            border: 1px solid #c2c2c2;
-            -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+            margin: 20px auto;
+            width: 500px;
+            display: box;
+            display: -webkit-box;
+            -webkit-box-orient:horizontal;
+            box-orient: horizontal;
+        }
+        input{
+            width: 100px;
+            display: none;
+        }
+        input.menu1:checked ~ label.btn1,
+        input.menu2:checked ~ label.btn2,
+        input.menu3:checked ~ label.btn3{
+            width: 100px;
+            height: 0;
+            line-height: 32px;
+            border-right: 30px solid transparent;
+            border-bottom: 30px solid #7adcb8;
+            text-align: center;
+            color: #3ca57e;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 5px 0 0 0px;
+            font-family: Arial, Helverica, sans-serif;
+            text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
+            padding-left: 5px;
+        }
+        label{
+            position: relative;
+            display: block;
+            width: 100px;
+            height: 0;
+            line-height: 32px;
+            border-right: 30px solid transparent;
+            border-bottom: 30px solid #a4dc6c;
+            text-align: center;
+            color: #fff;            
+            font-size: 15px;
+            font-weight: bold;
+            text-shadow: rgba(10, 10, 10, 0.5) 0px 0px 1px;
+            border-radius: 5px 0 0 0px; 
+            text-decoration: none;
+            padding-left: 5px;
+            font-family: Arial, Helverica, sans-serif;            
+            cursor: pointer;
+            z-index: 2;
+        }
+        ul{
+            position: relative;
+            margin: 30px auto;
+            width: 500px;
+            height: 300px;
+            padding: 30px;
+            -webkit-box-sizing:border-box;
+        }
+        ul.layout_mask{
+            position: absolute;
+            width: 500px;
+            left: 0;
+            height: 300px;
+            overflow: hidden;
+        }
+        ul.layout_mask li{
+            position: absolute;
+            top: 0px;
+            left: 600px;
+            padding: 20px 30px 30px 30px;
+            list-style: none;
+        }
+        p .title{
+            position: relative;
+            display: block;
+            font-size: 22px;
+            height: 30px;
+            font-weight:bold;
+            color: #7adcb8;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 10px;
+            text-shadow: rgba(255, 255, 255, 0.9) 1px 1px 1px;
+            border-bottom: 1px dashed #7adcb8;
+        }
+        p{
+            font-size: 12px; display: box; line-height: 20px; color: #666666;
+        }
+        input.menu1:checked ~ .layout_mask li:nth-child(1),
+        input.menu2:checked ~ .layout_mask li:nth-child(2),
+        input.menu3:checked ~ .layout_mask li:nth-child(3)
+        {
+            -webkit-animation: none;
+            -webkit-transition: left 0.5s ease-in-out;
+            left: 0px;
+            z-index: 10;
+        }
+        input:checked ~ .layout_mask li{
+            -webkit-animation: slideOut .5s ease-in-out none;
+        }
+        @-webkit-keyframes slideOut{
+            0%{left: 0px;}
+            100%{left: -600px;}
+        }
+        .effect{
+            position:relative; 
+            width: 500px; 
+            height: 300px; 
+            margin: -20px auto;
+            -webkit-box-sizing:border-box;
+            background:#fff;
+            border-radius: 0 10px 10px 10px;
+            -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
             box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
         }
-
         .effect:before, .effect:after{
-            content: "";
+            content:"";
             position: absolute;
             z-index: -1;
-            -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            top: 50%;
+            -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            top: 70%;
             bottom: 0;
             left: 15px;
             right: 15px;
@@ -38,12 +136,37 @@
     </style>
 </head>
 <body>
-    <div class="box1"></div><br />
-    <div class="box2"></div><br />
-    <div class="box3"></div>
+    <section>
+        <input id="select1" name="tabmenu" type="radio" class="menu1" checked/>
+        <label for="select1" class="btn1">Story</label>
+        <input id="select2" name="tabmenu" type="radio" class="menu2" />
+        <label for="select2" class="btn2">Happy Life</label>
+        <input id="select3" name="tabmenu" type="radio" class="menu3" />
+        <label for="select3" class="btn3">Dream</label>
 
-    <div class="box4"></div><br />
-    <div class="box4 effect"></div><br />
-    <div class="box4"></div>
+        <ul class="layout_mask">
+            <li>
+                <p>
+                    <span class="title">STORY</span>
+                    자연스러운 그라데이션처리된 분위기의 박스를 만들때는 포토샵으로 그림자를 주어서 이미지로 html에 bg로 깔아서 많이 사용했었습니다. <br>
+                    사선모양의 탭을 만들때도 이미지로 만들어서 가져왔었지만 이제 이모든것이 태그로 가능하게 됐습니다.
+                    자 포토샵없이 태그만으로 예쁜 탭 레이아웃을 만들어보도록 하겠습니다.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <span class="title">HAPPY LIFE</span>
+                    인생을 즐겁게 하기 위해선 자기가 가장 즐거운 일을 해야겠죠. 모든건 자기맘과 행동에 달려있는 것 같습니다.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <span class="title">DREAM</span>
+                    열정과 도전으로 꿈을 이루어가다. 내꿈은 무엇일까 고민합니다. 많은 이들이 꿈에 대한 희망과 열정으로 살기를 원합니다. 
+                </p>
+            </li>
+        </ul>
+    </section>
+    <div class="effect"></div>
 </body>
 </html>
