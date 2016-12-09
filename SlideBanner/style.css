@@ -1,0 +1,77 @@
+﻿* {
+            margin: 0;
+            padding: 0;
+        }
+        img{
+            border: 0;
+        }
+        ol, ul{
+            list-style: none;
+        }
+        body{
+            background: #eee;
+            font-size: 12px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+        section.container{
+            position: relative;
+            width: 300px;
+            height: 100px;
+            top: 100px;
+            margin: 0 auto;
+            border: 10px solid #fff;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        section ul.banner_mask{
+            overflow:hidden;
+            position: absolute;
+            width: 300px;
+            height: 100px;
+        }
+        section ul.banner_mask li{
+            position: absolute;
+            top: 0px;
+            left: 300px;
+        }
+        section.container label{
+            float: left;
+            position: relative;
+            left: 210px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            margin-left: 5px;
+            background: #e0e0e0;
+            line-height: 16px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        section.container input.banner_input1:checked ~ label.label_btn1,
+        section.container input.banner_input2:checked ~ label.label_btn2,
+        section.container input.banner_input3:checked ~ label.label_btn3,
+        section.container input.banner_input4:checked ~ label.label_btn4
+        {
+            background: #0088cc;
+            color:white;
+        }
+        section.container input {
+            display: none;
+        }
+        
+        section.container input.banner_input1:checked ~ .banner_mask li:nth-child(1),
+        section.container input.banner_input2:checked ~ .banner_mask li:nth-child(2),
+        section.container input.banner_input3:checked ~ .banner_mask li:nth-child(3),
+        section.container input.banner_input4:checked ~ .banner_mask li:nth-child(4)
+        {
+            -webkit-animation: none;
+            -webkit-transition: left 0.5s ease-in-out;
+            left: 0px;
+            z-index: 10;
+        }        section.container input:checked ~ .banner_mask li{
+            -webkit-animation: slideOut 0.5s ease-in-out none;
+        }        @-webkit-keyframes slideOut{
+            0% {left: 0px;}
+            100% {left: -300px;}
+        }
