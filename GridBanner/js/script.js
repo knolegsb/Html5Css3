@@ -1,92 +1,137 @@
-﻿
-$(document).ready(function () {
-    var $images = $('.content img'),
-        count = $images.length;
+﻿$(document).ready(function () {
 
-    $images.load(function () {
-        count--;
-        if (!count) {
-            executeContent();
-        }
-    })
+    function loadImg() {
+        var $images = $('.content img'), 
+        count = $images.length;         
 
-    function executeContent() {
-        var $items = $('.content > li:not(.center_content)');
-
-        var aniCount = $items.length;
-
-        $.each($items, function (index, target) {
-            $(this).delay(index * 150).prop({ "tempRotateY": 180 }).animate({ "tempRotateY": 90 }, {
-                duration: 500, easing: "easeInQuad",
-                step: function (y) {
-                    $(this).css('transform', "perspective(700) rotateY(" + y + "deg)");
-                },
-
-                complete: function () {
-                    $(this).find('.image').removeClass('none');
-
-                    $(this).animate({ "tempRotateY": 0 }, {
-                        duration: 500, easing: "easeOutQuad",
-                        step: function (y) {
-                            $(this).css('transform', "perspective(700) rotateY(" + y + "deg)");
-                        },
-                        complete: function () {
-                            aniCount--;
-                            if (!aniCount) {
-                                addEvent();
-                            }
-                        }
-                    });
-                }
-            });
+        $images.load(function () {
+            count--;
+            if (!count) {                
+                executeItemList();
+                executeLoopBanner();
+            }
         });
+    }
+   
+    function executeItemList() {
+        var $items = $('.content>li:not(.center_content)'),
+            slide_left = $items.eq(0).width() * -1;
+        
+        function playItemAnimate() {
+            var ROTATE_DURATION = 500,      
+                PERSPECTIVE = 700,          
+                FRONT_EASE = "easeInQuad",  
+                BACK_EASE = "easeOutQuad",  
+                DELAY_TIME = 150,           
 
+                aniCount = $items.length;   
+
+            $.each($items, function (index, target) {                
+                $(this).delay(index * DELAY_TIME).prop({ "tempRotateY": 180 }).animate({ "tempRotateY": 90 }, {
+                    duration: ROTATE_DURATION, easing: FRONT_EASE,
+                    step: function (y) {
+                        var tf = "perspective(" + PERSPECTIVE + ") rotateY(" + y + "deg)"
+                        $(this).css('transform', tf);
+                    },
+
+                    complete: function () {                        
+                        var $this = $(this);
+                        $this.animate({ "tempRotateY": 0 }, {
+                            duration: ROTATE_DURATION, easing: BACK_EASE,
+                            step: function (y) {
+                                $this.find('.image').removeClass('none');
+                                var tf = "perspective(" + PERSPECTIVE + ") rotateY(" + y + "deg)"
+                                $this.css('transform', tf);
+                            },
+
+                            complete: function () {                               
+                                aniCount--;
+                                if (!aniCount) {
+                                    addEvent();
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+        }//playItemAnimate
+        
         function addEvent() {
-            $('.content').on('mouseenter', 'li:not(.center_content)', function () {
-                $(this).children().stop().animate({ left: '0px' }, 500);
+            var $itemContain = $('.content'),
+                SLIDE_DURATION = 400;
+    
+            $itemContain.on('mouseenter', 'li:not(.center_content)', function () {
+                $(this).children().stop().animate({ left: '0px' }, SLIDE_DURATION);
             });
 
-            $('.content').on('mouseleave', 'li:not(.center_content)', function () {
-                $(this).children().stop().animate({ left: '-200px' }, 500);
+            $itemContain.on('mouseleave', 'li:not(.center_content)', function () {
+                $(this).children().stop().animate({ left: slide_left }, SLIDE_DURATION);
             });
-        }        
+        }//addEvent
 
-        /**
-         * slide banner 
-         **/
+        playItemAnimate();
 
-        var $contain = $('.center_content ul'),
-            loopList = $contain.children('li'),
-            currentIndex = 0,
-            totalIndex = loopList.length,
-            next_top = $contain.height(),
-            prev_top = next_top * -1;
+    }//executeItemList
+  
+    function executeLoopBanner() {
+        var DURATION = 500,         
+            EASE = 'easeOutQuad',   
+            INTERVAL_TIME = 1500,   
+            DELAY_TIME = 1500,      
 
-        $contain.removeClass('none').css('opacity', 0);
-        $contain.delay(1500).animate({ 'opacity': 1 }, 500, function () {
+            currentIndex = 0,       
+            $contain = $('.center_content ul'), 
+            loopList = $contain.children('li'), 
+            totalIndex = loopList.length - 1,   
+
+            next_top,   
+            prev_top;   
+
+        $contain.removeClass('none');
+
+        next_top = $contain.height();
+        prev_top = next_top * -1;
+
+        function fadeInEffect() {
+            $contain.css('opacity', 0);
+            $contain.delay(DELAY_TIME).animate({ 'opacity': 1 }, DURATION, executeLoop);
+        }
+        
+        function executeLoop() {            
             setInterval(function () {
-                var $currentItem,
-                    $nextItem,
-                    nextIndex = currentIndex + 1;
+                var nextItem,
+                nextIndex = currentIndex + 1;
 
-                if (nextIndex == totalIndex) {
+                if (nextIndex > totalIndex) {
                     nextIndex = 0;
                 }
 
-                $currentItem = loopList.eq(currentIndex);
-                $nextItem = loopList.eq(nextIndex);
+                currentItem = loopList.eq(currentIndex);
+                nextItem = loopList.eq(nextIndex);
 
-                $nextItem.removeClass('none');
-                $nextItem.css('top', next_top);
+                slideContent(currentItem, nextItem);
 
-                $currentItem.animate({ top: prev_top }, 500, 'easeOutQuad', function () {
-                    $(this).addClass('none');
-                });
-
-                $nextItem.animate({ top: '0px' }, 500, 'easeOutQuad');
                 currentIndex = nextIndex;
-            }, 1500);
-        });        
-    }
-});
 
+            }, INTERVAL_TIME);
+
+        }   
+        
+        function slideContent($currentItem, $nextItem) {            
+            $nextItem.removeClass('none');           
+            $nextItem.css('top', next_top);
+            $nextItem.animate({ top: '0px' }, DURATION, EASE);
+
+            $currentItem.animate({ top: prev_top }, DURATION, EASE, function () {
+                $(this).addClass('none');
+            });
+        }//slideContent
+
+        fadeInEffect();
+
+    }//executeLoopBanner
+
+    loadImg();
+
+});
