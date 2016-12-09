@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Circular Rotation Menu</title>
+	<meta charset="utf-8" />
+    <script src="js/jquery-1.8.1.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <style>
+        ul, ol {
+            list-style: none;
+        }
+        ul, li {
+            margin: 0;
+            padding: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+        body{
+            background: #212121;
+            font: 12px/120% Georgia, Times, serif;
+        }
+        .wrapper{
+            width: 100%;
+            height: 100%;
+        }
+        .contain{
+            position: relative;
+            top: 350px;
+            height: 350px;
+            width: 500px;
+        }
+        .cir_menu div{
+            padding-right: 180px;
+        }
+        .cir_menu li{
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            -webkit-transform-origin: 100% 50%;
+        }
+        .cir_menu a{
+            color: #666;
+            display: block;            
+        }
+        .cir_menu a:hover{
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $li = $('.cir_menu li'),
+                degValue = 360 / $li.length;
+
+            $.each($li, function (index, value) {
+                var deg = Math.round(degValue * index);
+                $this = $(this);
+                $this.css('transform', 'rotate(' + deg + 'deg)');
+                if (deg > 90 && deg < 270) {
+                    $this.find('a').css('transform', 'rotate(' + 180 + 'deg)');
+                }
+                $this.delay(35 * index).animate({ 'opacity': 1 }, 1000);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="contain">
+            <ul class="cir_menu">
+                <li><div><a href="#">W2UI JavaScript UI Library</a></div></li>
+                <li><div><a href="#">jQuery Marquee</a></div></li>
+                <li><div><a href="#">jQuery Sliderbutton</a></div></li>
+                <li><div><a href="#">Tipper</a></div></li>
+                <li><div><a href="#">Replace Radio/Checkbox Inputs</a></div></li>
+                <li><div><a href="#">jQuery Custom Scrollbar</a></div></li>
+                <li><div><a href="#">jQuery Date/Time Entry</a></div></li>
+                <li><div><a href="#">jQuery Date Entry</a></div></li>
+                <li><div><a href="#">jQuery Guide</a></div></li>
+                <li><div><a href="#">On-Screen Keyboard</a></div></li>
+                <li><div><a href="#">jQuery Modification Highlighter</a></div></li>
+                <li><div><a href="#">jQuery Google Search Bookbar</a></div></li>
+                <li><div><a href="#">jQuery highlightText</a></div></li>
+                <li><div><a href="#">Keyboard</a></div></li>
+                <li><div><a href="#">jQuery treetable</a></div></li>
+                <li><div><a href="#">jQuery dropdown button</a></div></li>
+                <li><div><a href="#">ParamQuery Grid</a></div></li>
+                <li><div><a href="#">Google Search Newsbar</a></div></li>
+                <li><div><a href="#">Spectrum Colorpicker</a></div></li>
+                <li><div><a href="#">Agile Carousel</a></div></li>
+                <li><div><a href="#">jQuery Mighty Form Styler</a></div></li>
+                <li><div><a href="#">jQuery RS Carousel</a></div></li>
+                <li><div><a href="#">jQuery Google Search Blogbar</a></div></li>
+                <li><div><a href="#">Kwicks for jQuery</a></div></li>
+                <li><div><a href="#">SCEditor</a></div></li>
+                <li><div><a href="#">jQuery mb.menu</a></div></li>
+                <li><div><a href="#">Iris Color Picker</a></div></li>
+                <li><div><a href="#">jQuery Continuous Calendar</a></div></li>
+                <li><div><a href="#">Simple Context Menu</a></div></li>
+                <li><div><a href="#">jQuery mb.containerPlus</a></div></li>
+                <li><div><a href="#">jQuery Fullscreen</a></div></li>
+                <li><div><a href="#">jQuery Smallipop</a></div></li>
+                <li><div><a href="#">jQuery mb.miniAudioPlayer</a></div></li>
+                <li><div><a href="#">jQuery Number Format</a></div></li>
+                <li><div><a href="#">jQuery Fixed/Floating List Header</a></div></li>
+                <li><div><a href="#">jQuery Rondell</a></div></li>
+                <li><div><a href="#">Equalizer</a></div></li>
+                <li><div><a href="#">Lemmon Slider</a></div></li>
+                <li><div><a href="#">jQuery Viewport</a></div></li>
+                <li><div><a href="#">bPopup</a></div></li>
+                <li><div><a href="#">jQuery Time Entry</a></div></li>
+                <li><div><a href="#">jQuery quickWizard</a></div></li>
+                <li><div><a href="#">jQuery Editable</a></div></li>
+                <li><div><a href="#">Justified Gallery</a></div></li>
+                <li><div><a href="#">Picker</a></div></li>
+                <li><div><a href="#">Animelt Plugin</a></div></li>
+                <li><div><a href="#">jQuery Dropdown Menu</a></div></li>
+                <li><div><a href="#">jQuery Scraggable</a></div></li>
+                <li><div><a href="#">Show Char Limit</a></div></li>
+                <li><div><a href="#">jQuery UI Lookup Dialog</a></div></li>
+                <li><div><a href="#">jQuery mb.CSSAnimate</a></div></li>
+                <li><div><a href="#">Scroller</a></div></li>
+                <li><div><a href="#">wTooltip jQuery Plugin</a></div></li>
+                <li><div><a href="#">Inputosaurus Text</a></div></li>
+                <li><div><a href="#">MULTICOL.</a></div></li>
+                <li><div><a href="#">jQuery Calculator</a></div></li>
+                <li><div><a href="#">jQuery PieTimer</a></div></li>
+                <li><div><a href="#">jQuery Twitterwall</a></div></li>
+                <li><div><a href="#">Boxer</a></div></li>
+                <li><div><a href="#">Simple jquery popup</a></div></li>
+                <li><div><a href="#">jQuery Calendars</a></div></li>  
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
